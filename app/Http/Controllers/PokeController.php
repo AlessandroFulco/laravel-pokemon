@@ -13,7 +13,7 @@ class PokeController extends Controller
      */
     public function index()
     {
-        $pokemons = Pokemon::paginate(3);
+        $pokemons = Pokemon::paginate();
         return view('allenatore.index', compact('pokemons'));
     }
 
@@ -57,9 +57,9 @@ class PokeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Pokemon $pokemon)
     {
-        //
+        return view('allenatore.edit', compact('pokemon'));
     }
 
     /**
@@ -69,9 +69,11 @@ class PokeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pokemon $pokemon)
     {
-        //
+        $formData = $request->all();
+        $pokemon->update($formData);
+        return redirect()->route('pokemons.show', compact('pokemon'));
     }
 
     /**
